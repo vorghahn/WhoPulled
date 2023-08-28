@@ -13,7 +13,7 @@ Back story aside. This is an addon that tells you who pulled the boss
 do it with a pet. There are many surrounding features as well:
  * Notifies you of any pull and who it was by.
  * Allows you to recite the most recent pull, or the pull of a specific
-   enemy to say, yell, party, raid, battleground (AV), or notify with 
+   enemy to say, yell, party, raid, battleground (AV), guild, officer or notify with 
    a quick command.
  * Can filter out pull notifications based on who's tanking.
  * Can filter out pull notifications based on mob names (ie. Risen Zombie)
@@ -24,3 +24,4 @@ do it with a pet. There are many surrounding features as well:
    than the given tanks pull the boss.
  * In-game help file with /wp help An example of /wp help [topic] for
    those confused would be /wp help silent or /wp help ywho
+ * Automatic detection of tanks via the Main Tank and Main Assit roles.
