@@ -3,6 +3,7 @@ WhoPulled_MobToPlayer = {};
 WhoPulled_LastMob = "";
 WhoPulled_Settings = {
 ["onboss"] = true,
+["boss_list"] = true,
 ["channel"] = "PARTY",
 ["whisper"] = "",
 ["silent"] = false,
@@ -83,7 +84,7 @@ function WhoPulled_PullBlah(player,enemy,msg)
 				end
 				i = i+1;
 			end
-		elseif hasFound then
+		elseif hasFound and WhoPulled_Settings["boss_list"] then
 			if(not strfind(WhoPulled_Tanks,"[ ,.|]"..player.."[ ,.|]") and not WhoPulled_Ignore[enemy[2]]) then
 				local channel = WhoPulled_Settings["channel"];
 				-- todo
@@ -326,6 +327,15 @@ function WhoPulled_CLI(line)
 			WhoPulled_Settings["onboss"] = false;
 			DEFAULT_CHAT_FRAME:AddMessage("Automatic output of who pulled a boss: off");
 		end
+	elseif(comm == "boss_list" or comm == "bl")then
+		line = strlower(line);
+		if(line == "true" or line == "on") then
+			WhoPulled_Settings["boss_list"] = true;
+			DEFAULT_CHAT_FRAME:AddMessage("Use of manual boss list: on");
+		else
+			WhoPulled_Settings["boss_list"] = false;
+			DEFAULT_CHAT_FRAME:AddMessage("Use of manual boss list: off");
+		end
 	elseif(comm == "msg")then
 		WhoPulled_Settings["msg"] = line;
 	elseif(comm == "silent")then
@@ -337,7 +347,9 @@ function WhoPulled_CLI(line)
 			WhoPulled_Settings["silent"] = false;
 			DEFAULT_CHAT_FRAME:AddMessage("Silent mode: off");
 		end
-		
+	elseif(comm == "cleartanks" or comm == "ct")then
+		WhoPulled_OnLeaveParty();
+		DEFAULT_CHAT_FRAME:AddMessage("Tank list cleared");		
 	--todo
 	elseif(comm == "channel") then
 		line = strupper(line);
@@ -417,6 +429,8 @@ function WhoPulled_CLI(line)
 			DEFAULT_CHAT_FRAME:AddMessage("Clears stored data on who pulled what for this session.");
 		elseif(line == "boss" or line == "wpyb") then
 			DEFAULT_CHAT_FRAME:AddMessage("Turns automatically braodcastingon boss pull on or off. Use /wp channel to set the desired output channel.");
+		elseif(line == "boss_list" or line == "bl") then
+			DEFAULT_CHAT_FRAME:AddMessage("Manual boss list enable/disable. Manual list is required for a lot of classic dungeons.");
 		elseif(line == "msg") then
 			DEFAULT_CHAT_FRAME:AddMessage("Message that you say. Use %p for the player who pulled, and %e for the enemy he pulled.");
 		elseif(line == "who" or line == "swho" or line == "ywho" or line == "rwho" or line == "pwho" or line == "bwho" or line == "gwho" or line == "owho" or line == "rwwho") then
@@ -444,11 +458,13 @@ function WhoPulled_CLI(line)
 			DEFAULT_CHAT_FRAME:AddMessage("/wp help [topic] For help on a specific function.");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp clear");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp boss {on/off}");
+			DEFAULT_CHAT_FRAME:AddMessage("/wp boss_list {on/off}");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp channel {channel name}");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp whisper {character to whisper}");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp silent {on/off}");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp msg {custom message}");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp tanks [list of tanks]");
+			DEFAULT_CHAT_FRAME:AddMessage("/wp cleartanks");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp rage {enemy}");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp forgive {player}");
 			DEFAULT_CHAT_FRAME:AddMessage("/wp list [enemy/realm]");
