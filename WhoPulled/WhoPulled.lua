@@ -65,18 +65,7 @@ function WhoPulled_PullBlah(player,enemy,msg)
 		local i,boss;
 		i = 1;
 		--while(1==1) do
-		if hasFound then
-			if(not strfind(WhoPulled_Tanks,"[ ,.|]"..player.."[ ,.|]") and not WhoPulled_Ignore[enemy[2]]) then
-				local channel = WhoPulled_Settings["channel"];
-				-- todo
-				--DEFAULT_CHAT_FRAME:AddMessage("alerts on boss, list identification");
-				if(WhoPulled_Settings["onboss"]) then
-					launch_message(channel,enemy[2])
-				elseif not WhoPulled_Settings["silent"] then
-					launch_message("ECHO",enemy[2])
-				end
-			end
-		elseif UnitExists("boss"..i) then
+		if UnitExists("boss"..i) then
 			while(UnitExists("boss"..i)) do
 				--if(1 == 1) then
 				if(UnitName("boss"..i) == enemy[2]) then
@@ -94,6 +83,18 @@ function WhoPulled_PullBlah(player,enemy,msg)
 				end
 				i = i+1;
 			end
+		elseif hasFound then
+			if(not strfind(WhoPulled_Tanks,"[ ,.|]"..player.."[ ,.|]") and not WhoPulled_Ignore[enemy[2]]) then
+				local channel = WhoPulled_Settings["channel"];
+				-- todo
+				--DEFAULT_CHAT_FRAME:AddMessage("alerts on boss, list identification");
+				if(WhoPulled_Settings["onboss"]) then
+					launch_message(channel,enemy[2])
+				elseif not WhoPulled_Settings["silent"] then
+					launch_message("ECHO",enemy[2])
+				end
+			end
+
 		else
 			if(not WhoPulled_Settings["silent"] and not WhoPulled_Ignore[enemy[2]] and 
 			   not strfind(WhoPulled_Tanks,"[ ,.|]"..player.."[ ,.|]")) then
