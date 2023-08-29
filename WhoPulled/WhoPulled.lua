@@ -4,9 +4,9 @@ WhoPulled_LastMob = "";
 WhoPulled_Settings = {
 ["onboss"] = true,
 ["boss_list"] = true,
-["channel"] = "PARTY",
+["channel"] = "ECHO",
 ["whisper"] = "",
-["silent"] = false,
+["silent"] = true,
 ["msg"] = "%p PULLED %e!!!",
 }
 WhoPulled_PetsToMaster = {};
